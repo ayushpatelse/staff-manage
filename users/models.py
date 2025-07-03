@@ -46,9 +46,29 @@ class CustomUser(AbstractUser):
     objects = CustomUserManager()
     
     def __str__(self):
-        return self.email
+        return self.email + ' - ' + str(self.sec_id)
     
     class Meta:
         verbose_name = ('user')
 
-    
+# Data Role
+STAFF_ROLES = [
+    ('NR','NORMAL'),
+    ('MR','MANAGER'),
+    ('SR','SCHEDULER')
+]
+
+DEPARTMENT = [
+    ('EN','EVENT'),
+    ('CN','CONSIERGE')
+]
+
+class Employee(models.Model):
+    user = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
+    date_join = models.DateField(auto_now=True)
+    role = models.CharField(max_length=2,choices=STAFF_ROLES,default='NR')
+    status = models.BooleanField(default=False,name="Active")
+    phone = models.PositiveBigIntegerField(default=0000000000)
+    department =models.CharField(max_length=2,choices=DEPARTMENT,default='CN')
+    def __str__(self):
+        return self.user.email
