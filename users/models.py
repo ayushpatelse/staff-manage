@@ -15,7 +15,9 @@ class CustomUserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
-
+    
+    
+        
     def create_superuser(self, sec_id, email, password=None, **extra_fields):
         # Set default superuser flags
         extra_fields.setdefault('is_staff', True)
@@ -34,7 +36,7 @@ class CustomUserManager(BaseUserManager):
 
 class CustomUser(AbstractUser):
     # Creating Security Id as primary key 
-    sec_id = models.PositiveIntegerField(max_length=10, unique=True, primary_key=True, verbose_name=("Security ID"),default=None)
+    sec_id = models.PositiveIntegerField( unique=True, primary_key=True, verbose_name=("Security ID"),default=None)
 
     # Disable Username as primary
     username = None
@@ -50,12 +52,22 @@ class CustomUser(AbstractUser):
     
     class Meta:
         verbose_name = ('user')
+        
+    @property
+    def is_manager(self):
+        try:
+            # Check if the employee_profile (related_name) exists
+            # and if its role is 'MR' (Manager Role)
+            return self.employee_profile.role == "MR"  
+        except Employee.DoesNotExist:
+            return False 
 
 # Data Role
 STAFF_ROLES = [
     ('NR','NORMAL'),
     ('MR','MANAGER'),
-    ('SR','SCHEDULER')
+    ('SR','SCHEDULER'),
+    ('AD','ADMIN')
 ]
 
 DEPARTMENT = [
@@ -64,11 +76,16 @@ DEPARTMENT = [
 ]
 
 class Employee(models.Model):
-    user = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
+    user = models.OneToOneField(CustomUser,on_delete=models.CASCADE,related_name='employee_profile')
     date_join = models.DateField(auto_now=True)
     role = models.CharField(max_length=2,choices=STAFF_ROLES,default='NR')
     status = models.BooleanField(default=False,name="Active")
+    address = models.CharField(max_length=100,default='Not added')
     phone = models.PositiveBigIntegerField(default=0000000000)
     department =models.CharField(max_length=2,choices=DEPARTMENT,default='CN')
+    
     def __str__(self):
         return self.user.email
+    
+    class Meta:
+        permissions = [('can_manage','Can manage the Staff')] 
