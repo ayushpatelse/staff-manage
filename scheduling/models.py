@@ -8,6 +8,7 @@ class Shift(models.Model):
         ('open','OPEN'),
         ('cancelled','CANCELLED'),
         ('completed','COMPLETED'),
+        ('booked','BOOKED'),
     ]
     date = models.DateField()
     start_time = models.TimeField()
