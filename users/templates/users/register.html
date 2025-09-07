@@ -1,0 +1,42 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block title %} Register {% endblock %}
+
+{% block main %}
+<div class="flex py-4 justify-center text-2xl">
+    <h2 class="text-center font-bold">Registeration Form</h1>
+</div>
+<form action="{% url 'register' %}" method="post"
+    class="m-6 bg-gray-100 grid grid-cols-4 border  py-6 px-5 rounded-lg shadow-lg  md:grid-cols-2 ">
+    {% csrf_token %}
+
+
+    <div class="my-2  rounded-lg ">
+        <label for="{{form.first_name.name}}" >First Name</label>
+        <input type="text" class="border border-4 w-[70%] px-2 py-1 rounded-md hover:shadow-md focus:shadow-md focus:shadow-gray-200" placeholder="i.e. Jhon" name="{{form.first_name.name}}" required>
+    </div>
+    <div class="my-2 rounded-lg ">
+        <label for="{{form.last_name.name}}">Last Name</label>
+        <input type="text" class="border border-4 w-[70%] px-2 py-1 rounded-md hover:shadow-md focus:shadow-md focus:shadow-gray-200" placeholder="i.e. Smith" name="{{form.last_name.name}}" required>
+    </div>
+    <div class="my-2 rounded-lg">
+        <label for="{{form.email.name}}">Email</label>
+        <input type="email" class="border border-4 w-[70%] px-2 py-1 rounded-md hover:shadow-md focus:shadow-md focus:shadow-gray-200" placeholder="i.e. jsmith20@gmail.com" name="{{form.email.name}}" required>
+    </div>
+    <div class="my-2 rounded-lg">
+        <label for="{{form.sec_id.name}}">Security Licence</label>
+        <input type="number" class="border border-4 w-[70%] px-2 py-1 rounded-md hover:shadow-md focus:shadow-md focus:shadow-gray-200" placeholder="i.e. 00000000" name="{{form.sec_id.name}}" required>
+    </div>
+    <div class="my-2 rounded-lg">
+            <label for="password">Password</label>
+        <input type="password" class="border border-4 w-[70%] px-2 py-1 rounded-md hover:shadow-md focus:shadow-md focus:shadow-gray-200" placeholder="at least 8 character" name="password">
+    </div>
+    <div class="my-2 rounded-lg">
+        <label for="password2">Confirm Password</label>
+        <input type="password" class="border border-4 w-[70%] px-2 py-1 rounded-md hover:shadow-md focus:shadow-md focus:shadow-gray-200" placeholder="at least 8 character" name="password2">
+    </div>
+    <button class="border border-4 bg-green-500 hover:bg-green-700 text-white border-green-600 btn btn-green col-span-2 px-3 py-2 rounded-lg ">Register</button>
+</form>
+
+{% endblock %}

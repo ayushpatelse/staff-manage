@@ -37,7 +37,7 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractUser):
     # Creating Security Id as primary key 
     sec_id = models.PositiveIntegerField( unique=True, primary_key=True, verbose_name=("Security ID"),default=None)
-
+    email = models.EmailField(unique=True,verbose_name=("Email address"))
     # Disable Username as primary
     username = None
     
@@ -79,7 +79,7 @@ class Employee(models.Model):
     user = models.OneToOneField(CustomUser,on_delete=models.CASCADE,related_name='employee_profile')
     date_join = models.DateField(auto_now=True)
     role = models.CharField(max_length=2,choices=STAFF_ROLES,default='NR')
-    status = models.BooleanField(default=False,name="Active")
+    status = models.BooleanField(default=False)
     address = models.CharField(max_length=100,default='Not added')
     phone = models.PositiveBigIntegerField(default=0000000000)
     department =models.CharField(max_length=2,choices=DEPARTMENT,default='CN')

@@ -1,0 +1,117 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block title %} Events List {% endblock %}
+
+{% block main %}
+
+<div class="">
+    
+    <form method="get" action="?" id="search-form" class="p-8  bg-gradient-to-br from-gray-600 to-gray-700 rounded-lg  max-w-3xl mx-auto border-t-4 border-blue-200">
+    <span class="font-bold text-4xl text-white mb-8 block text-center tracking-wide">Enter the Details For Events</span>
+    <span class="hidden " id="search-form-data">  </span>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
+        <div class="py-1">
+            <label for="keyword" class="block text-white font-semibold mb-2 text-sm">Keyword</label>
+            <input type="text" placeholder="i.e. Name,event,artist" value="{{search_data.keyword}}" class="w-full rounded-lg border-2 border-white outline-none px-4 bg-transparent bg-opacity-30 text-white py-2.5 transition-all duration-300 focus:border-blue-300 focus:ring-2 focus:ring-blue-500" name="keyword">
+        </div>
+        <div class="py-1">
+            <label for="city" class="block text-white font-semibold mb-2 text-sm">City</label>
+            <input type="text" placeholder="i.e. Toronto" value="{{search_data.city}}"  class="w-full rounded-lg border-2 border-white outline-none px-4 bg-transparent bg-opacity-30 text-white py-2.5 transition-all duration-300 focus:border-blue-300 focus:ring-2 focus:ring-blue-500" name="city">
+        </div>
+        
+        <div class="py-1">
+            <label for="stateCode"  class="block text-white font-semibold mb-2 text-sm">State Code</label>
+            <input type="text" placeholder="i.e. ON" value="{{search_data.stateCode}}"  class="w-full rounded-lg border-2 border-white outline-none px-4 bg-transparent bg-opacity-30 text-white py-2.5 transition-all duration-300 focus:border-blue-300 focus:ring-2 focus:ring-blue-500" name="stateCode">
+        </div>
+        
+        <div class="py-1">
+            <label for="countryCode" class="block text-white font-semibold mb-2 text-sm">Country Code</label>
+            <input type="text" placeholder="i.e. CA" value="{{search_data.countryCode}}" required class="w-full rounded-lg border-2 border-white outline-none px-4 bg-transparent bg-opacity-30 text-white py-2.5 transition-all duration-300 focus:border-blue-300 focus:ring-2 focus:ring-blue-500" name="countryCode">
+        </div>
+        
+        <div class="py-1">
+            <label for="startDate" class="block text-white font-semibold mb-2 text-sm">Start Date</label>
+            <input type="text" placeholder="i.e. 10-12-1004" value="{{search_data.startDate}}" class="w-full rounded-lg border-2 border-white outline-none px-4 bg-transparent bg-opacity-30 text-white py-2.5 transition-all duration-300 focus:border-blue-300 focus:ring-2 focus:ring-blue-500" name="startDate">
+        </div>
+        
+        
+        <div class="py-1">
+            <label for="size" class="block text-white font-semibold mb-2 text-sm">Size</label>
+            <input type="text" placeholder="i.e. 10" value="{{search_data.size}}" class="w-full rounded-lg border-2 border-white outline-none px-4 bg-transparent bg-opacity-30 text-white py-2.5 transition-all duration-300 focus:border-blue-300 focus:ring-2 focus:ring-blue-500" name="size">
+        </div>
+        
+        <div class="py-1">
+            <label for="page" class="block text-white font-semibold mb-2 text-sm">Page</label>
+            <input type="text" placeholder="i.e. 20" value="{{search_data.page}}" class="w-full rounded-lg border-2 border-white outline-none px-4 bg-transparent bg-opacity-30 text-white py-2.5 transition-all duration-300 focus:border-blue-300 focus:ring-2 focus:ring-blue-500" name="page">
+        </div>
+        
+        <div class="py-1">
+            <label for="type" class="block text-white font-semibold mb-2 text-sm">Type</label>
+            <input type="text" placeholder="i.e. event" value="{{search_data.type}}" class="w-full rounded-lg border-2 border-white outline-none px-4 bg-transparent bg-opacity-30 text-white py-2.5 transition-all duration-300 focus:border-blue-300 focus:ring-2 focus:ring-blue-500" name="type">
+        </div>
+
+
+    </div>
+        <div class=""><button class="border w-fit border-2 rounded-lg px-3 hover:shadow-white py-2 bg-white mt-2 hover:text-white hover:bg-gray-700 hover:shadow-sm hover:border-gray-400">Search</button></div>
+</form>
+</div>
+
+<div class="p-8  rounded-lg">
+    
+    <table class="table-auto w-full">
+        <thead class="bg-blue-700 text-white">
+            <tr>
+                <th>Event Name</th>
+                <th>Venue</th>
+                <th>Date</th>
+                <th>Image</th>
+                <th>Capacity</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in event_list.events %}
+            <tr class="border-y-4 ">
+                <td class="text-xl align-center">{{event.name}}</td>
+                <td>
+                    <ul>
+                        <li>
+                            {{event.venue.name}}
+                        </li>
+                        <li class="text-xs">
+                            {{event.venue.city}}
+                        </li>
+                    </ul>
+                </td>
+                <td>{{event.date}}</td>
+                <td class="flex justify-center ">
+                    <img src="{{event.images_url}}"  class="w-[10%] " width="140px " alt="Img">
+                </td>
+                <td>{{event.id}}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <button class="rounded-lg border px-2 py-1 m-3 text-sm bg-green-400 hover:bg-green-300">View</button>
+                        </li>
+                        <li>
+                            <button class="rounded-lg border px-2 py-1 m-3 text-sm bg-blue-400 hover:bg-blue-300">Add</button>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}
+{% block script %}
+    <script>
+        // Filter Form Logic-------------------------------------------------------------------
+        const pageSearchData = document.getElementById('search-form-data').innerText ;
+        console.log(pageSearchData)
+    </script>
+
+{% endblock  %}

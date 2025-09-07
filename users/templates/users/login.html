@@ -1,0 +1,26 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block title %} Login {% endblock %}
+
+{% block main %}
+<div class="flex py-4 justify-center text-2xl">
+    <h2 class="text-center font-bold">Login</h1>
+</div>
+<form action="{% url 'signIn' %}" method="post"
+    class="mx-[30%] px-3 py-4 bg-gray-100  border   rounded-lg shadow-lg  ">
+    {% csrf_token %}
+
+
+    <div class="py-2 px-4 rounded-lg">
+        <label for="{{form.sec_id.name}}">Security ID </label>
+        <input type="text" class="border border-4 w-[70%] px-2 py-1 rounded-md hover:shadow-md focus:shadow-md focus:shadow-gray-200" placeholder="000000000" name="{{form.sec_id.name}}" required>
+    </div>
+    <div class="py-2 px-4 rounded-lg">
+        <label for="{{form.password.name}}">Password</label>
+        <input type="password" class="border border-4 w-[70%] px-2 py-1 rounded-md hover:shadow-md focus:shadow-md focus:shadow-gray-200" placeholder="at least 8 character" name="{{form.password.name}}">
+    </div>
+    <button class="border border-4 w-[50%] mx-24  bg-green-500 hover:bg-green-700 text-white border-green-600 btn btn-green col-span-2 px-3 py-2 rounded-lg ">Login</button>
+</form>
+
+{% endblock %}

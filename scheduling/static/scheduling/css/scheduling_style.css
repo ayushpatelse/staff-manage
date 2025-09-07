@@ -1,0 +1,34 @@
+/* Shift color codes */
+:root{
+    --status-box-height:30px;
+    --status-box-width:70px;
+    --status-box-border-radius:10%;
+
+    --status-color-open:rgb(72, 121, 255)  ;
+    --status-color-cancelled:rgb(255, 65, 65) ;
+    --status-color-booked: rgb(255, 255, 39);
+    --status-color-completed:rgb(63, 255, 63) ;
+    --status-color-undefined: rgb(0,0,0) ;
+}
+
+.shift-signal-box{
+    height: var(--status-box-height);
+    width:  var(--status-box-width);
+    border-radius:  var(--status-box-border-radius);
+}
+
+.shift-box-undefined{
+    background-color: var(--status-color-undefined);  
+}
+.shift-box-open{
+    background-color: var(--status-color-open);  
+}
+.shift-box-cancelled{
+    background-color: var(--status-color-cancelled);
+}
+.shift-box-booked{
+    background-color: var(--status-color-booked);
+}
+.shift-box-completed{
+    background-color: var(--status-color-completed);
+}

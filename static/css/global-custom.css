@@ -1,0 +1,8 @@
+.image-slant{
+    clip-path: circle(50px);
+}
+
+.blank-shadow{
+    box-shadow: 1px 1px  5px #5b5b5b;
+}
+

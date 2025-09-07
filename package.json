@@ -1,0 +1,23 @@
+{
+  "name": "staff-manage",
+  "version": "1.0.0",
+  "description": "Goal: Creating a Staff management system for managing staff.",
+  "main": "tailwind.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "tailwindcss build static/css/template.css -o static/css/main.css -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayushpatelse/staff-manage.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ayushpatelse/staff-manage/issues"
+  },
+  "homepage": "https://github.com/ayushpatelse/staff-manage#readme",
+  "devDependencies": {
+    "tailwindcss": "^4.1.10"
+  }
+}

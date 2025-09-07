@@ -49,4 +49,15 @@ class Event(models.Model):
         return self.name  + self.venue_name
 
 
+# Venue Model 
+class Venue(models.Model):
+    venue_id = models.CharField(max_length=255,unique=True)
+    name = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
+    city = models.CharField(max_length=25)
+    state = models.CharField(max_length=25)
+    country = models.CharField(max_length=20)
+    postal_code = models.CharField(max_length=10)
 
+    def __str__(self):
+        return f'{self.name} - {self.city}'

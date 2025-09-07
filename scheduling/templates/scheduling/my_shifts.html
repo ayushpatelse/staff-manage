@@ -1,0 +1,134 @@
+{% extends 'users/base.html' %} {# Assuming users/base.html is your base template #}
+{% load static %}
+
+{% block title %} Shift List {% endblock %}
+{% block link %}
+<link rel="stylesheet" href="{% static 'scheduling/css/scheduling_style.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="container mx-auto p-4">
+    <h2 class="text-3xl font-extrabold text-gray-900 mb-6 text-center">Upcoming Shifts</h2>
+
+    {% if messages %}
+    <ul class="messages list-none p-0 mb-4">
+        {% for message in messages %}
+        <li
+            class="p-3 rounded mb-2 text-center text-sm {% if 'success' in message.tags %}bg-green-100 text-green-800{% elif 'error' in message.tags %}bg-red-100 text-red-800{% elif 'info' in message.tags %}bg-blue-100 text-blue-800{% endif %}">
+            {{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <div class="overflow-x-auto shadow-lg rounded-lg border border-gray-200 m-1">
+        <table class="min-w-full divide-y divide-gray-300">
+            <thead class="bg-gradient-to-r from-purple-600 to-purple-800">
+                <tr>
+                    <th scope="col"
+                        class="px-6 bg-gray-500 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">
+                        Date
+                    </th>
+                    <th scope="col"
+                        class="px-6 bg-gray-500 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">
+                        Status
+                    </th>
+                    <th scope="col"
+                        class="px-6 bg-gray-500 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">
+                        Start Time
+                    </th>
+                    <th scope="col"
+                        class="px-6 bg-gray-500 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">
+                        End Time
+                    </th>
+                    <th scope="col"
+                        class="px-6 bg-gray-500 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">
+                        Location
+                    </th>
+                    <th scope="col"
+                        class="px-6 bg-gray-500 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">
+                        Associated Event
+                    </th>
+                    <th scope="col"
+                        class="px-6 bg-gray-500 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">
+                        Assigned Employee
+                    </th>
+                    <th scope="col"
+                        class="px-6 bg-gray-500 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">
+                        Published
+                    </th>
+                    <th scope="col" class="relative bg-gray-500 px-6 py-3">
+                        <span class="sr-only">Actions</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                {% if shift_list %}
+                {% for shift in shift_list %}
+                <tr class="{% cycle 'bg-white' 'bg-gray-50' %} hover:bg-gray-100"> {# Alternating row colors #}
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {{ shift.date|date:"M d, Y" }} {# Format date nicely #}
+                    </td>
+
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                        <!-- Keep the help text span right after div box  -->
+                        {% if shift.status == "open" %}
+                        <div class="shift-signal-box  shift-box-open signal-box-help-text" data-status-text="open"></div>
+                        <span class="signal-help-text hidden"></span>
+                        {% elif shift.status == "cancelled" %}
+                        <div class="shift-signal-box shift-box-cancelled signal-box-help-text" data-status-text="cancelled"> </div>
+                        <span class="signal-help-text hidden"></span>
+                        {% elif shift.status == "booked" %}
+                        <div class="shift-signal-box shift-box-booked signal-box-help-text" data-status-text="booked"> </div>
+                        <span class="signal-help-text hidden"></span>
+                        {% elif shift.status == "completed" %}
+                        <div class="shift-signal-box shift-box-completed signal-box-help-text" data-status-text="completed"> </div>
+                        <span class="signal-help-text hidden"></span>
+                        {% else %}
+                        <div class="shift-signal-box shift-box-undefined signal-box-help-text" data-status-text="unkown"> </div>
+                        <span class="signal-help-text hidden"></span>
+                        {% endif %}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                        {{ shift.start_time|time:"h:i A" }} {# Format time nicely #}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                        {{ shift.end_time|time:"h:i A" }} {# Format time nicely #}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                        {% if shift.location %}{{ shift.location.name }}{% else %}N/A{% endif %}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                        {% if shift.event %}{{ shift.event.name }}{% else %}N/A{% endif %}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                        {% if shift.assigned_employee %}
+                        {{ shift.assigned_employee.user.first_name| capfirst }} {{shift.assigned_employee.user.last_name| capfirst }}
+                        {% else %}
+                        Unassigned
+                        {% endif %}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        {% if shift.is_published %}
+                        <span class="text-green-600 font-semibold">Yes</span>
+                        {% else %}
+                        <span class="text-red-600 font-semibold">No</span>
+                        {% endif %}
+                    </td>
+
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="8" class="px-6 py-4 text-center text-sm text-gray-500">No shifts found.</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'scheduling/js/scheduling_script.js' %}"></script>
+{% endblock %}

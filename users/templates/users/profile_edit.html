@@ -1,0 +1,46 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% load filters %}
+
+{% block title %} Edit Profile {% endblock %}
+
+{% block main %}
+
+
+<div class="max-w-4xl mx-auto p-6 bg-white rounded-lg  pb-2">
+    
+    <form class="   rounded-lg shadow-lg border border-gray-200" method="post" action="{% url 'profile_edit' pk=request.user.sec_id %}">
+        {% csrf_token %}
+        <h3 class="text-3xl rounded-t-lg text-white bg-gray-500 font-semibold text-center text-gray-700  pb-2 border-b border-gray-300 p-3 ">Personal Information Editing</h3>
+        <div class="p-3 ">
+
+            <div class="mb-2 px-3 ">
+                <label for="" class="mb-2 font-semibold">{{user_form.first_name.label}} :</label>
+                <input type="text" placeholder="{{user_form.first_name.placeholder}}" class="px-2 py-1 border-b-2 border-gray-500  outline-1 outline-blue-500  rounded-t-lg " name="{{user_form.first_name.name}}" value="{{user_form.first_name.value}}" id="" required>
+            </div>
+            <div class="mb-2 px-3">
+                <label for="" class="mb-2 font-semibold">{{user_form.last_name.label}} :</label>
+                <input type="text" class="px-2 py-1 border-b-2 border-gray-500  outline-1 outline-blue-500  rounded-t-lg " name="{{user_form.last_name.name}}" value="{{user_form.last_name.value}}" id="" required>
+            </div>
+            <div class="mb-2 px-3">
+                <label for="" class="mb-2 font-semibold">{{user_form.email.label}} :</label>
+                <input type="text" class="px-2 py-1 border-b-2 border-gray-500  outline-1 outline-blue-500  rounded-t-lg " name="{{user_form.email.name}}" value="{{user_form.email.value}}" id="" required>
+            </div>
+            <div class="mb-2 px-3">
+                <label for="" class="mb-2 font-semibold">{{emp_form.phone.label}} :</label>
+                <input type="text" class="px-2 py-1 border-b-2 border-gray-500  outline-1 outline-blue-500  rounded-t-lg " name="{{emp_form.phone.name}}" value="{{emp_form.phone.value}}" id="" required>
+            </div>
+            <div class="mb-2 px-3">
+                <label for="" class="mb-2 font-semibold">{{emp_form.address.label}} :</label>
+                <input type="text" class="px-2 py-1 border-b-2 border-gray-500  outline-1 outline-blue-500  rounded-t-lg " name="{{emp_form.address.name}}" value="{{emp_form.address.value}}" id="">
+            </div>
+        <!-- <p class="mb-2 text-gray-700"><strong class="font-medium text-gray-800">Address:</strong> 123 Main St, Anytown, USA</p> -->
+            <button type="submit" class="px-6 py-2 mx-2 bg-green-600 text-white font-semibold rounded-md shadow-md hover:bg-green-700 hover:shadow-green-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-75 transition duration-300 ease-in-out"> Update</button>
+        </div>
+    </form>
+
+
+
+</div>
+
+{% endblock %}

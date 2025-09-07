@@ -1,0 +1,44 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% load filters %}
+
+    {% block title %} Employee Details  {% endblock %}
+
+{% block main %}
+    
+    
+    <div class="max-w-4xl mx-auto  bg-white rounded-lg  pb-2">
+    <div class="text-center mb-6">
+        <h2 class="text-3xl font-bold text-gray-800">Profile of {{employee.user.first_name |capfirst}}, {{employee.user.last_name | capfirst}}</h2>
+        </div>
+
+    <div class="grid grid-cols-1 bg-gray-400 rounded-lg md:grid-cols-2 px-3 py-4 gap-6 mb-6">
+        <div class="bg-gray-50 p-6 rounded-md border border-gray-200">
+            <h3 class="text-xl font-semibold text-gray-700 mb-4 pb-2 border-b border-gray-300">Personal Information</h3>
+            <img class="border shadow-md rounded-md" src="data:image/png;base64,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" alt="">
+            <p class="mb-2 text-gray-700"><strong class="font-medium text-gray-800">Name: </strong> {{employee.user.first_name.capitalize}} {{user.user.last_name.capitalize}} </p>
+            <p class="mb-2 text-gray-700"><strong class="font-medium text-gray-800">Email:</strong> {{employee.user.email}} </p>
+            <p class="mb-2 text-gray-700"><strong class="font-medium text-gray-800">Phone:</strong> {{employee.phone | phone_format}}</p>
+            <p class="mb-2 text-gray-700"><strong class="font-medium text-gray-800">Address:</strong> {{employee.address}}</p>
+            <p class="mb-2 text-gray-700"><strong class="font-medium text-gray-800">Date Joined:</strong> {{employee.date_join|date:"j F Y"}}</p>
+        </div>
+
+        <div class="bg-gray-50 p-6 rounded-md border border-gray-200">
+            <h3 class="text-xl font-semibold text-gray-700 mb-4 pb-2 border-b border-gray-300">Staff Details</h3>
+            <p class="mb-2 text-gray-700"><strong class="font-medium text-gray-800">Employee ID:</strong> {{employee.user.sec_id}}</p>
+            <p class="mb-2 text-gray-700"><strong class="font-medium text-gray-800">Department:</strong> {{employee.department}}</p>
+            <p class="mb-2 text-gray-700"><strong class="font-medium text-gray-800">Position:</strong> {{employee.role}}</p>
+            <p class="mb-2 text-gray-700"><strong class="font-medium text-gray-800">Status:</strong> {% if employee.active == true %} <span class="text-green-700 font-bold">Active</span> {% else %} <span class="text-red-700 font-bold">Not Active</span> {% endif %}</p>
+            <!-- <p class="mb-2 text-gray-700"><strong class="font-medium text-gray-800">Last Login:</strong> July 3, 2025</p> -->
+        </div>
+    </div>
+
+    <div class="text-center pt-4 border-t border-gray-200">
+        {% if request.user.sec_id == employee.user.sec_id  or request.user.is_manager %}
+            <a class="px-6 py-2 mx-2 bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 transition duration-300 ease-in-out" href="{% url 'employee_edit' employee.user.sec_id %}">Edit Employee Info</a>
+        {% endif %}
+        <!-- History of employee  -->
+    </div>
+</div>
+
+{% endblock %}    

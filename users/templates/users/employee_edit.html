@@ -1,0 +1,108 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block title %} Employee Edit : {{obj.user.sec_id}} {% endblock %}
+
+{% block main %}
+<div class="container mx-auto p-4">
+  {% if messages %}
+  <ul class="messages list-none p-0 mb-4">
+    {% for message in messages %}
+    <li
+      class="p-3 rounded mb-2 text-center text-sm {% if 'success' in message.tags %}bg-green-100 text-green-800{% elif 'error' in message.tags %}bg-red-100 text-red-800{% elif 'info' in message.tags %}bg-blue-100 text-blue-800{% endif %}">
+      {{ message }}
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  <div class="overflow-x-auto  rounded-lg border border-gray-200  shadow-lg">
+    <form action="{% url 'employee_edit' pk=obj.user.sec_id  %}" class="px-12" method="post" >
+      <h3 class="px-3 py-2 text-center text-3xl text-white bg-gray-600 "> Employee Editing Form - <span
+          class="font-bold">{{obj.user.first_name |capfirst}} {{obj.user.last_name |capfirst}}</span> </h3>
+      {% csrf_token %}
+      <!-- User Form -->
+      <div >
+        <h4 class="text-2xl text-center px-2 font-bold text-gray-800 mb-4 pb-2 border-b-2 border-gray-500">Personal Information</h4>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-1 p-4">
+          <div class="mb-3">
+            <label for="{{user_form.first_name.name}}" class="font-bold">{{user_form.first_name.label}}</label>
+            <input type="text" name="{{user_form.first_name.name}}"
+              class="border border-gray-300 w-full px-3 py-2 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 "
+              value="{{user_form.first_name.value}}">
+          </div>
+          <div class="mb-3">
+            <label for="{{user_form.last_name.name}}" class="font-bold">{{user_form.last_name.label}}</label>
+            <input type="text" name="{{user_form.last_name.name}}"
+              class="border border-gray-300 w-full px-3 py-2 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              value="{{user_form.last_name.value}}">
+          </div>
+          <div class="mb-3">
+            <label for="{{user_form.email.name}}" class="font-bold">{{user_form.email.label}}</label>
+            <input type="text" name="{{user_form.email.name}}"
+              class="border border-gray-300 w-full px-3 py-2 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              value="{{user_form.email.value}}">
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Employee Form -->
+      <div class="">
+        <h4 class="text-2xl text-center font-bold text-gray-800 mb-4 px-2 pb-2 border-b-2 border-gray-500">Work Information</h4>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-1 p-4">
+          <div class="mb-3">
+            <label for="{{emp_form.role.name}}" class="font-bold ">{{emp_form.role.name | capfirst}}</label>
+            <span
+              class="border border-gray-300 w-full px-3 py-2 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+              {{emp_form.role}}
+  
+            </span>
+          </div>
+  
+          <div class="mb-3">
+            <label for="{{emp_form.status.name}}" class="font-bold ">{{emp_form.status.name |capfirst}}</label>
+            <input type="radio" name="{{emp_form.status.name}}"
+              class="border border-gray-300  px-3 py-2 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              value="True" {% if emp_form.status.value %} checked {% endif %} id="">
+            <span> Active </span>
+            <input type="radio" name="{{emp_form.status.name}}"
+              class="border border-gray-300  px-3 py-2 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              value="False" {% if emp_form.status.value == False %} checked {% endif %} id="">
+            <span> Not Active </span>
+  
+          </div>
+          <div class="mb-3">
+            <label for="{{emp_form.department.name}}" class="font-bold ">{{emp_form.department.name | capfirst}}</label>
+            <span class="border rounded-lg">{{emp_form.department}}</span>
+          </div>
+  
+          <div class="mb-3 mt-2">
+            <label for="{{emp_form.phone.label}}" class="font-bold ">{{emp_form.phone.label}}</label>
+            <input type="text" name="{{emp_form.phone.name}}" value="{{emp_form.phone.value}}"
+              class="border border-gray-300 w-full px-3 py-2 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              id="">
+          </div>
+          <div class="mb-3 mt-2">
+            <label for="{{emp_form.address.label}}" class="font-bold ">{{emp_form.address.label}}</label>
+            <input type="text" name="{{emp_form.address.name}}" value="{{emp_form.address.value}}"
+              class="border border-gray-300 w-full px-3 py-2 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              id="">
+          </div>
+  
+  
+        </div>
+      </div>
+
+      <button type="submit" class="border px-6  rounded-lg font-bold   py-2 m-4 bg-yellow-400">Update</button>
+
+    </form>
+
+
+
+  </div>
+</div>
+
+{% endblock %}
